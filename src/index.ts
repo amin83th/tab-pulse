@@ -1,3 +1,5 @@
-export function tabPulse() {
-    console.log("Tab Pulse is working!");
-}
+import { TabPulse } from "./core/TabPulse";
+
+export const tabPulse = new TabPulse();
+
+export { TabPulse };
