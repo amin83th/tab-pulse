@@ -1,16 +1,14 @@
 {
   "name": "tab-pulse",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "main": "./dist/tab-pulse.umd.cjs",
   "module": "./dist/tab-pulse.js",
   "types": "./dist/index.d.ts",
-
   "repository": {
     "type": "git",
     "url": "https://github.com/amin83th/tab-pulse.git"
   },
-
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -18,17 +16,14 @@
       "require": "./dist/tab-pulse.umd.cjs"
     }
   },
-
   "files": [
     "dist"
   ],
-
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc -p tsconfig.build.json",
     "preview": "vite preview"
   },
-
   "devDependencies": {
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
