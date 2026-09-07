@@ -11,34 +11,59 @@ permissions:
 
 jobs:
   publish:
+    # جلوگیری از اجرای دوباره Workflow برای commit انتشار
     if: "!contains(github.event.head_commit.message, 'chore: release')"
 
     runs-on: ubuntu-latest
 
     steps:
+      # دریافت سورس پروژه
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
+      # نصب Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
 
+      # آپدیت npm برای Trusted Publishing
       - name: Update npm
         run: npm install -g npm@latest
 
-      - name: Check versions
-        run: |
-          node --version
-          npm --version
-          node -p "require('./package.json').version"
+      # بررسی نسخه‌ها
+      - name: Check Node version
+        run: node --version
 
+      - name: Check npm version
+        run: npm --version
+
+      # نصب dependencyها
       - name: Install dependencies
         run: npm ci
 
+      # Build پروژه
       - name: Build
         run: npm run build
 
+      # تنظیم Git
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # افزایش نسخه
+      - name: Increase version
+        run: 'npm version patch -m "chore: release v%s"'
+
+      # انتشار در npm
       - name: Publish to npm
         run: npm publish
+
+      # فقط در صورت موفقیت npm publish،
+      # تغییرات version و tag روی GitHub Push می‌شوند
+      - name: Push changes
+        run: git push --follow-tags
