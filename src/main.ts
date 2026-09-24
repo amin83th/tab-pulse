@@ -13,5 +13,7 @@ import { tabPulse } from "./index";
 
 
 document.querySelector('#app')?.addEventListener("click" , ()=>{
-    tabPulse.notify(3, "messages");
+    tabPulse.notify(5, "messages", {
+    clearOnInteraction: true
+});
 })
